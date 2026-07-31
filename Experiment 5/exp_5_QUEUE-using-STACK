@@ -6,6 +6,7 @@ class Queue:
 
     def enqueue(self, x):
         self.s1.append(x)
+        print(x, "added to queue")
 
     def dequeue(self):
         if not self.s2:
@@ -33,18 +34,35 @@ class Queue:
 
 q = Queue()
 
-q.enqueue(10)
-q.enqueue(20)
-q.enqueue(30)
+while True:
+    print("\nQueue Menu")
+    print("1. Enqueue")
+    print("2. Dequeue")
+    print("3. Front")
+    print("4. Check if Empty")
+    print("5. Exit")
 
-print("Front:", q.front())
+    choice = int(input("Enter your choice: "))
 
-print("Removed:", q.dequeue())
-print("Removed:", q.dequeue())
+    if choice == 1:
+        value = int(input("Enter value to enqueue: "))
+        q.enqueue(value)
 
-q.enqueue(40)
+    elif choice == 2:
+        print("Removed:", q.dequeue())
 
-print("Front:", q.front())
+    elif choice == 3:
+        print("Front:", q.front())
 
-print("Removed:", q.dequeue())
-print("Removed:", q.dequeue())
+    elif choice == 4:
+        if q.isEmpty():
+            print("Queue is Empty")
+        else:
+            print("Queue is Not Empty")
+
+    elif choice == 5:
+        print("Exiting")
+        break
+
+    else:
+        print("Invalid")
