@@ -3,62 +3,41 @@ class Node:
         self.data = data
         self.next = None
 
-def createLinkedList(values):
-    if not values:
-        return None
 
-    head = Node(values[0])
-    temp = head
-
-    for num in values[1:]:
-        temp.next = Node(num)
-        temp = temp.next
-
-    return head
-
-def is_palindrome(head):
-
-    if head is None or head.next is None:
-        return True
-
+def detectCycle(head):
     slow = head
     fast = head
 
-    while fast.next and fast.next.next:
+    while fast and fast.next:
         slow = slow.next
         fast = fast.next.next
 
-    previous = None
-    current = slow.next
+        if slow == fast:
+            return True
 
-    while current:
-        nextNode = current.next
-        current.next = previous
-        previous = current
-        current = nextNode
+    return False
 
-    first = head
-    second = previous
-
-    while second:
-        if first.data != second.data:
-            return False
-        first = first.next
-        second = second.next
-
-    return True
 
 n = int(input("Enter number of nodes: "))
 
-print("Enter the values of the linked list:")
-values = []
+nodes = []
 
 for i in range(n):
-    values.append(int(input()))
+    value = int(input(f"Enter value of node {i + 1}: "))
+    nodes.append(Node(value))
 
-head = createLinkedList(values)
+# Connect nodes
+for i in range(n - 1):
+    nodes[i].next = nodes[i + 1]
 
-if is_palindrome(head):
-    print("True")
+head = nodes[0] if n > 0 else None
+
+pos = int(input("Enter cycle position (-1 for no cycle): "))
+
+if pos != -1:
+    nodes[-1].next = nodes[pos]
+
+if detectCycle(head):
+    print("Cycle detected")
 else:
-    print("False")
+    print("No cycle detected")
